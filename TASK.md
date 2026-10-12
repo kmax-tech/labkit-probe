@@ -1,7 +1,9 @@
 # TASK — one kept number
 
 You are a researcher new to this lab repository. Work only inside this
-directory; use `.venv/bin/python`. You may commit (never push). Do not
+directory; use `.venv/bin/python`. Commit as you go on a branch named
+`probe-count`; when you are done, push that branch — it is the only way your
+work leaves this session. Do not
 ask questions; make reasonable choices and note them in your report.
 
 **The number.** The mean number of input documents per case over the
@@ -16,8 +18,8 @@ Follow the repo's own rules: `CLAUDE.md` is in your context already (as a
 session loads it), the lab standard holds the long form
 (`python -m labkit.rules show LAB-nnn`) — read what you need, no more.
 
-**The log** matters as much as the number. Append to `/Users/max/projects/labkit-probe.log.md` ONE line
-BEFORE each step (`touch` it first; append with `>>`):
+**The log** matters as much as the number. Append to `log.md` in the repository root ONE line
+BEFORE each step (`touch` it first; append with `>>`; commit it with your last commit):
 
     HH:MM:SS · <tag> · <the step, in a few words>
 
