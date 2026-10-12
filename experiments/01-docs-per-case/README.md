@@ -2,8 +2,7 @@
 
 *Self-contained: data, scripts, output and this description live here.*
 
-**The one question.** <one sentence — the same question as in the protocol's
-Intent; if it needs an "and", it is two experiments>
+**The one question.** How many input documents does a case in `data/raw/cases.jsonl` carry on average?
 
 <!-- labkit:route -->
 **Trace it.**

@@ -25,10 +25,10 @@ from labkit import recheck, runlog
 AREA = Path(__file__).resolve().parent.parent
 REPO = AREA.parent.parent
 PROTOCOL = AREA / "PROTOCOL-docs-per-case.md"
-SOURCE = REPO / "data" / "TODO"                 # what is counted — a file or a directory
+SOURCE = REPO / "data" / "raw" / "cases.jsonl"  # what is counted — one case per line, `inputs` names the document root
 OUT = AREA / "output" / "docs-per-case.jsonl"          # one row per item, written by this script
-COUNT_FIELD = "TODO_count"                      # the per-item number in each row
-METRIC_KEY = "TODO_mean"                        # the kept number's key in metrics.json; the test reads both names from here
+COUNT_FIELD = "doc_count"                       # the per-item number in each row
+METRIC_KEY = "mean_docs_per_case"               # the kept number's key in metrics.json; the test reads both names from here
 
 
 def visible(directory: Path) -> list[Path]:
@@ -39,16 +39,45 @@ def visible(directory: Path) -> list[Path]:
     return sorted(p for p in directory.iterdir() if p.is_file() and not p.name.startswith("."))
 
 
+def cases() -> list[dict]:
+    """The cases SOURCE lists, in file order: `case_id` and `inputs` (a
+    directory relative to the repo root). A duplicate case_id is a refusal."""
+    out = []
+    with SOURCE.open(encoding="utf-8") as fh:
+        for n, line in enumerate(fh, 1):
+            if not line.strip():
+                continue
+            c = json.loads(line)
+            if "case_id" not in c or "inputs" not in c:
+                raise ValueError(f"{SOURCE.name}:{n}: a case needs `case_id` and `inputs`")
+            out.append(c)
+    ids = [c["case_id"] for c in out]
+    if len(set(ids)) != len(ids):
+        raise ValueError(f"{SOURCE.name}: duplicate case_id — the denominator would be wrong")
+    return out
+
+
 def expected_ids() -> list[str]:
-    """TODO: the ids the number is over, read from SOURCE — the denominator
+    """The ids the number is over, read from SOURCE — the denominator
     comes from the source, never from the rows that happened to be produced."""
-    raise NotImplementedError("expected_ids(): the ids SOURCE lists")
+    return [c["case_id"] for c in cases()]
 
 
 def rows(ids: list[str]) -> list[dict]:
-    """TODO: one row per id — the raw material of the number. A missing or
-    empty item is a refusal, not a skipped row."""
-    raise NotImplementedError("rows(): one dict per id, fail loud on a missing one")
+    """One row per id — the raw material of the number: the visible files
+    under `<inputs>/<case_id>/`. A missing directory or one without a single
+    document is a refusal, not a skipped row."""
+    inputs = {c["case_id"]: c["inputs"] for c in cases()}
+    out = []
+    for cid in ids:
+        d = REPO / inputs[cid] / cid
+        if not d.is_dir():
+            raise FileNotFoundError(f"rows(): {cid}: no directory {d.relative_to(REPO)}")
+        docs = visible(d)
+        if not docs:
+            raise ValueError(f"rows(): {cid}: {d.relative_to(REPO)} holds no document")
+        out.append({"id": cid, COUNT_FIELD: len(docs), "docs": [p.name for p in docs]})
+    return out
 
 
 def evaluate_rows(items: list[dict], ids: list[str]) -> dict:
@@ -61,7 +90,9 @@ def evaluate_rows(items: list[dict], ids: list[str]) -> dict:
         raise ValueError("evaluate_rows(): SOURCE lists no ids — refusing a number over nothing")
     if len(items) != len(ids):
         raise ValueError(f"evaluate_rows(): {len(items)} rows for {len(ids)} ids — a silent loss")
-    raise NotImplementedError("evaluate_rows(): compute the number(s) from items")
+    if sorted(r["id"] for r in items) != sorted(ids):
+        raise ValueError("evaluate_rows(): the rows' ids are not the ids SOURCE lists")
+    return {METRIC_KEY: sum(r[COUNT_FIELD] for r in items) / len(ids)}
 
 
 def main() -> None:
