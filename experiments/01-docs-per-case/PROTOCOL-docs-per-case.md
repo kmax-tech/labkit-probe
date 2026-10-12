@@ -2,7 +2,9 @@
 
 ## Summary (after the run, for a person)
 
-- **Result:** <the answer to the question above, in at most two plain sentences…>
+- **Result:** On average a case brings 3.5 input documents (run `2026-10-12T18-52-51_d18a`, 12 cases, 42 documents; per case between 2 and 6).
+- **Limits:** a document is any visible regular file in the case directory — the count does not look inside files, and nested directories are ignored; N = 12 is the whole list, no sampling.
+- **Next step:** none owed for this count; the agent audit falls due when the number goes into a note or steers a decision (LAB-017).
 
 ## Intent (before the run)
 
@@ -13,7 +15,7 @@
 
 ## Result (after the run — write back, don't go quiet)
 
-- **Answer to the question:** <per registered id its verdict, and the run_id…>
+- **Answer to the question:** `mean_docs_per_case` = 3.5 — the mean over the 12 cases of `data/raw/cases.jsonl` (42 visible documents in all); run `2026-10-12T18-52-51_d18a`.
 
 ## Setup
 
@@ -23,7 +25,7 @@
 
 ## Runs (documented runs — via `runlog`, cite run_ids instead of retyping numbers)
 
-- <run_id> — <one sentence: what this run was>
+- `2026-10-12T18-52-51_d18a` — the one full run of the count over all 12 cases, deterministic, no model.
 
 ## Head (read by the checks)
 
