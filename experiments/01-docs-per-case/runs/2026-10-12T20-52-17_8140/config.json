@@ -1,0 +1,36 @@
+{
+  "schema_version": 2,
+  "experiment": "docs-per-case",
+  "script": "01_measure.py",
+  "protocol": {
+    "id": "p-2d9bd6121bde43ad",
+    "path": "PROTOCOL-docs-per-case.md"
+  },
+  "derived_from": null,
+  "unfrozen_ack": false,
+  "cost_tier": "seconds",
+  "promises": null,
+  "script_sha": "4aa56ff7e0d0",
+  "untracked_sources": [],
+  "pid": 720,
+  "git": "4c35952",
+  "git_full": "4c3595270a7add097a0382298e6384d8266d2898",
+  "python": "3.13.16",
+  "env": "/home/user/labkit-probe/experiments/01-docs-per-case/../../.venv/bin/python | requirements.lock:2312000c1c01 | drift:0",
+  "models_resolved": {},
+  "started": "2026-10-12T20:52:17",
+  "command": [
+    "scripts/01_measure.py"
+  ],
+  "data": {
+    "source": {
+      "path": "/home/user/labkit-probe/data/raw/cases.jsonl",
+      "sha256": "df51133132ec46c1",
+      "rows": 12
+    },
+    "leakage_check": "skipped: need >=2 of train/dev/test, or a control (anchor/gate/placebo) and a measured set, as .jsonl with an 'id' field per row"
+  },
+  "config": {
+    "source": "data/raw/cases.jsonl"
+  }
+}

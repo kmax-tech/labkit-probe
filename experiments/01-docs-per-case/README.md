@@ -15,8 +15,9 @@
 
 ## Contract
 
-**What `evaluate_rows()` returns.** <the number under `METRIC_KEY` — and,
-only if the protocol registers ids, one key per id>. The formula lives once, in `scripts/01_measure.py`;
+**What `evaluate_rows()` returns.** One key, `mean_docs_per_case`: the sum of
+`doc_count` over the rows divided by the number of case ids `cases.jsonl` lists
+(no id registered — a plain count). The formula lives once, in `scripts/01_measure.py`;
 `--check` and the test call it, `intent-check` and `finalize` hold the ids to
 these keys.
 
@@ -26,6 +27,6 @@ through `runlog` · `finalize` · number + run_id into the protocol · `01_measu
 
 ## State
 
-- [ ] Registration written in the protocol (**before** the first run)
-- [ ] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
-- [ ] Run, `finalize` green, number + run_id in the protocol
+- [x] Registration written in the protocol (**before** the first run)
+- [x] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
+- [x] Run, `finalize` green, number + run_id in the protocol
