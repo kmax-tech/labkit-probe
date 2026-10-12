@@ -2,16 +2,18 @@
 
 ## Summary (after the run, for a person)
 
-- **Result:** <the answer to the question above, in at most two plain sentences…>
+- **Result:** A case carries 3.5 input documents on average (12 cases, 42 files, range 2–6); every listed case had at least one document (run 2026-10-12T20-02-01_ba91).
 
 ## Intent (before the run)
 
 - **Terms of this protocol:** A *case* is one line of `data/raw/cases.jsonl` (its `case_id`); its *input documents* are the visible regular files directly under `<inputs>/<case_id>/`, where `inputs` is the field of that line, relative to the repo root; *docs per case* is that file count, `mean_docs_per_case` its arithmetic mean over all cases.
 - **Question / hypothesis:** How many input documents does a case carry on average — the mean number of files under `<inputs>/<case_id>/` over the cases listed in `data/raw/cases.jsonl`? Exploratory count, no expectation registered.
+- **Success / failure criterion:** n/a — a plain count without a model registers no criterion; the number is held by `--check` and `finalize`, not judged.
+- **Admissibility condition:** [A1] every case listed in `data/raw/cases.jsonl` has an input directory with at least one visible document (coverage 12 of 12, key `a1_pass`); a missing or empty case aborts the run — an instrument failure, not a value.
 
 ## Result (after the run — write back, don't go quiet)
 
-- **Answer to the question:** <per registered id its verdict, and the run_id…>
+- **Answer to the question:** mean_docs_per_case = 3.5 (42 documents over 12 cases); a1_pass = true (12 of 12 cases carry at least one document) — run 2026-10-12T20-02-01_ba91.
 
 ## Setup
 
@@ -21,7 +23,7 @@
 
 ## Runs (documented runs — via `runlog`, cite run_ids instead of retyping numbers)
 
-- <run_id> — <one sentence: what this run was>
+- 2026-10-12T20-02-01_ba91 — the one full run: counted the visible files under data/raw/inputs/<case_id>/ for all 12 cases of cases.jsonl, mean 3.5.
 
 ## Head (read by the checks)
 

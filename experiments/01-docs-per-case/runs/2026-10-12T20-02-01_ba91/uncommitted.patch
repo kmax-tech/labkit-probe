@@ -1,0 +1,12 @@
+diff --git a/experiments/01-docs-per-case/PROTOCOL-docs-per-case.md b/experiments/01-docs-per-case/PROTOCOL-docs-per-case.md
+index 3c4ad2b..6d34f8e 100644
+--- a/experiments/01-docs-per-case/PROTOCOL-docs-per-case.md
++++ b/experiments/01-docs-per-case/PROTOCOL-docs-per-case.md
+@@ -8,6 +8,8 @@
+ 
+ - **Terms of this protocol:** A *case* is one line of `data/raw/cases.jsonl` (its `case_id`); its *input documents* are the visible regular files directly under `<inputs>/<case_id>/`, where `inputs` is the field of that line, relative to the repo root; *docs per case* is that file count, `mean_docs_per_case` its arithmetic mean over all cases.
+ - **Question / hypothesis:** How many input documents does a case carry on average — the mean number of files under `<inputs>/<case_id>/` over the cases listed in `data/raw/cases.jsonl`? Exploratory count, no expectation registered.
++- **Success / failure criterion:** n/a — a plain count without a model registers no criterion; the number is held by `--check` and `finalize`, not judged.
++- **Admissibility condition:** [A1] every case listed in `data/raw/cases.jsonl` has an input directory with at least one visible document (coverage 12 of 12, key `a1_pass`); a missing or empty case aborts the run — an instrument failure, not a value.
+ 
+ ## Result (after the run — write back, don't go quiet)

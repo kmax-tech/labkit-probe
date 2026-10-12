@@ -2,8 +2,7 @@
 
 *Self-contained: data, scripts, output and this description live here.*
 
-**The one question.** <one sentence — the same question as in the protocol's
-Intent; if it needs an "and", it is two experiments>
+**The one question.** How many input documents does a case carry on average — the mean number of visible files under `<inputs>/<case_id>/` over the cases listed in `data/raw/cases.jsonl`?
 
 <!-- labkit:route -->
 **Trace it.**
@@ -16,8 +15,7 @@ Intent; if it needs an "and", it is two experiments>
 
 ## Contract
 
-**What `evaluate_rows()` returns.** <the number under `METRIC_KEY` — and,
-only if the protocol registers ids, one key per id>. The formula lives once, in `scripts/01_measure.py`;
+**What `evaluate_rows()` returns.** `mean_docs_per_case` (the mean of `doc_count` over the ids the source lists) and `a1_pass` (coverage: every listed case has at least one document). The formula lives once, in `scripts/01_measure.py`;
 `--check` and the test call it, `intent-check` and `finalize` hold the ids to
 these keys.
 
@@ -27,6 +25,6 @@ through `runlog` · `finalize` · number + run_id into the protocol · `01_measu
 
 ## State
 
-- [ ] Registration written in the protocol (**before** the first run)
-- [ ] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
-- [ ] Run, `finalize` green, number + run_id in the protocol
+- [x] Registration written in the protocol (**before** the first run)
+- [x] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
+- [x] Run, `finalize` green, number + run_id in the protocol

@@ -1,0 +1,12 @@
+{"id": "antrag-01", "inputs": "data/raw/inputs", "doc_count": 4, "documents": ["document-1.txt", "document-2.txt", "document-3.txt", "document-4.txt"], "_prov": {"run": "2026-10-12T20-02-01_ba91"}}
+{"id": "antrag-02", "inputs": "data/raw/inputs", "doc_count": 4, "documents": ["document-1.txt", "document-2.txt", "document-3.txt", "document-4.txt"], "_prov": {"run": "2026-10-12T20-02-01_ba91"}}
+{"id": "antrag-03", "inputs": "data/raw/inputs", "doc_count": 3, "documents": ["document-1.txt", "document-2.txt", "document-3.txt"], "_prov": {"run": "2026-10-12T20-02-01_ba91"}}
+{"id": "antrag-04", "inputs": "data/raw/inputs", "doc_count": 4, "documents": ["document-1.txt", "document-2.txt", "document-3.txt", "document-4.txt"], "_prov": {"run": "2026-10-12T20-02-01_ba91"}}
+{"id": "antrag-05", "inputs": "data/raw/inputs", "doc_count": 4, "documents": ["document-1.txt", "document-2.txt", "document-3.txt", "document-4.txt"], "_prov": {"run": "2026-10-12T20-02-01_ba91"}}
+{"id": "antrag-06", "inputs": "data/raw/inputs", "doc_count": 3, "documents": ["document-1.txt", "document-2.txt", "document-3.txt"], "_prov": {"run": "2026-10-12T20-02-01_ba91"}}
+{"id": "antrag-07", "inputs": "data/raw/inputs", "doc_count": 2, "documents": ["document-1.txt", "document-2.txt"], "_prov": {"run": "2026-10-12T20-02-01_ba91"}}
+{"id": "antrag-08", "inputs": "data/raw/inputs", "doc_count": 3, "documents": ["document-1.txt", "document-2.txt", "document-3.txt"], "_prov": {"run": "2026-10-12T20-02-01_ba91"}}
+{"id": "antrag-09", "inputs": "data/raw/inputs", "doc_count": 4, "documents": ["document-1.txt", "document-2.txt", "document-3.txt", "document-4.txt"], "_prov": {"run": "2026-10-12T20-02-01_ba91"}}
+{"id": "antrag-10", "inputs": "data/raw/inputs", "doc_count": 3, "documents": ["document-1.txt", "document-2.txt", "document-3.txt"], "_prov": {"run": "2026-10-12T20-02-01_ba91"}}
+{"id": "antrag-11", "inputs": "data/raw/inputs", "doc_count": 2, "documents": ["document-1.txt", "document-2.txt"], "_prov": {"run": "2026-10-12T20-02-01_ba91"}}
+{"id": "antrag-12", "inputs": "data/raw/inputs", "doc_count": 6, "documents": ["document-1.txt", "document-2.txt", "document-3.txt", "document-4.txt", "document-5.txt", "document-6.txt"], "_prov": {"run": "2026-10-12T20-02-01_ba91"}}

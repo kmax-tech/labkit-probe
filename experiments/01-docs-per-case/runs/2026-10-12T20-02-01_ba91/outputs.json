@@ -1,0 +1,11 @@
+[
+  {
+    "path": "/home/user/labkit-probe/experiments/01-docs-per-case/output/docs-per-case.jsonl",
+    "sha256": "d7f787fb4bba729f",
+    "lines": 12,
+    "rows_from": {
+      "2026-10-12T20-02-01_ba91": 12
+    },
+    "continues": []
+  }
+]
