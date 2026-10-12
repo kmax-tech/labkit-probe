@@ -25,10 +25,10 @@ from labkit import recheck, runlog
 AREA = Path(__file__).resolve().parent.parent
 REPO = AREA.parent.parent
 PROTOCOL = AREA / "PROTOCOL-docs-per-case.md"
-SOURCE = REPO / "data" / "TODO"                 # what is counted — a file or a directory
+SOURCE = REPO / "data" / "raw" / "cases.jsonl"  # what is counted — one case per line
 OUT = AREA / "output" / "docs-per-case.jsonl"          # one row per item, written by this script
-COUNT_FIELD = "TODO_count"                      # the per-item number in each row
-METRIC_KEY = "TODO_mean"                        # the kept number's key in metrics.json; the test reads both names from here
+COUNT_FIELD = "doc_count"                       # the per-item number in each row
+METRIC_KEY = "mean_docs_per_case"               # the kept number's key in metrics.json; the test reads both names from here
 
 
 def visible(directory: Path) -> list[Path]:
@@ -40,19 +40,37 @@ def visible(directory: Path) -> list[Path]:
 
 
 def expected_ids() -> list[str]:
-    """TODO: the ids the number is over, read from SOURCE — the denominator
+    """The ids the number is over, read from SOURCE — the denominator
     comes from the source, never from the rows that happened to be produced."""
-    raise NotImplementedError("expected_ids(): the ids SOURCE lists")
+    ids = [json.loads(line)["case_id"] for line in SOURCE.read_text(encoding="utf-8").splitlines() if line.strip()]
+    if len(set(ids)) != len(ids):
+        raise ValueError(f"expected_ids(): duplicate case_id in {SOURCE.name}")
+    return ids
 
 
 def rows(ids: list[str]) -> list[dict]:
-    """TODO: one row per id — the raw material of the number. A missing or
+    """One row per id — the raw material of the number. A missing or
     empty item is a refusal, not a skipped row."""
-    raise NotImplementedError("rows(): one dict per id, fail loud on a missing one")
+    cases = {}
+    for line in SOURCE.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            c = json.loads(line)
+            cases[c["case_id"]] = c
+    out = []
+    for cid in ids:
+        folder = REPO / cases[cid]["inputs"] / cid
+        if not folder.is_dir():
+            raise FileNotFoundError(f"rows(): no input directory for case {cid!r}: {folder}")
+        docs = visible(folder)
+        if not docs:
+            raise ValueError(f"rows(): case {cid!r} has no documents under {folder} — refusing an empty item")
+        out.append({"id": cid, "inputs": cases[cid]["inputs"], COUNT_FIELD: len(docs),
+                    "documents": [d.name for d in docs]})
+    return out
 
 
 def evaluate_rows(items: list[dict], ids: list[str]) -> dict:
-    """TODO: the number(s) from the rows, over the ids SOURCE lists — and,
+    """The number(s) from the rows, over the ids SOURCE lists — and,
     only if the protocol registers ids (a model in the loop), one key per id
     (`c1_pass`); a plain count registers none. Every key lands in
     metrics.json, and `--check` demands each verbatim in the protocol's
@@ -61,7 +79,12 @@ def evaluate_rows(items: list[dict], ids: list[str]) -> dict:
         raise ValueError("evaluate_rows(): SOURCE lists no ids — refusing a number over nothing")
     if len(items) != len(ids):
         raise ValueError(f"evaluate_rows(): {len(items)} rows for {len(ids)} ids — a silent loss")
-    raise NotImplementedError("evaluate_rows(): compute the number(s) from items")
+    if sorted(r["id"] for r in items) != sorted(ids):
+        raise ValueError("evaluate_rows(): the rows' ids are not the ids SOURCE lists")
+    # [A1] coverage: every listed case carries at least one document — rows()
+    # already refuses an empty case, so this records what the run was held to
+    a1_pass = all(r[COUNT_FIELD] >= 1 for r in items)
+    return {METRIC_KEY: sum(r[COUNT_FIELD] for r in items) / len(ids), "a1_pass": a1_pass}
 
 
 def main() -> None:
