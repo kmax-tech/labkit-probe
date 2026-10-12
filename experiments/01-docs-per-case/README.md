@@ -15,9 +15,7 @@
 
 ## Contract
 
-**What `evaluate_rows()` returns.** <the number under `METRIC_KEY` and per
-registered promise its key — from the protocol's [[promise]] sentences: [C1]
-c1_pass …, [A1] a1_pass …>. The formula lives once, in `scripts/01_measure.py`;
+**What `evaluate_rows()` returns.** `mean_docs_per_case` (the mean of `doc_count` over the cases `data/raw/cases.jsonl` lists), `n_cases`, and per registered promise its key: [C1] `c1_pass` — one number over exactly the listed cases; [A1] `a1_pass` — every case had at least one visible document. The formula lives once, in `scripts/01_measure.py`;
 `--check` and the test call it, `intent-check` and `finalize` hold the ids to
 these keys.
 
@@ -27,6 +25,6 @@ through `runlog` · `finalize` · number + run_id into the protocol · `01_measu
 
 ## State
 
-- [ ] Registration written in the protocol (**before** the first run)
-- [ ] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
-- [ ] Run, `finalize` green, number + run_id in the protocol
+- [x] Registration written in the protocol (**before** the first run)
+- [x] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
+- [x] Run, `finalize` green, number + run_id in the protocol

@@ -2,18 +2,9 @@
 
 ## Summary (after the run, for a person)
 
-- **Result:** <the answer to the question above, in at most two
-  plain sentences: whether the bar set before the run was met ("Yes — the
-  class descriptions kept the cable set out of the framework class in all
-  five cases, as required") — or that no verdict was possible because an
-  admissibility condition failed, and what was still read descriptively;
-  the result, not the procedure; no intent ids, metric keys or run_ids,
-  they are below>
-- **Limits:** <how far it holds, one sentence — the sample, a
-  single run, what was not tested; a deviation after the freeze that
-  touches the verdict is named here too>
-- **Next step:** <what follows — a decision, the next experiment,
-  or "none">
+- **Result:** A case carries 3.5 input documents on average (12 cases, 42 documents; between 2 and 6 per case). Every listed case had a directory with at least one document, so the count is over the whole list.
+- **Limits:** A fixture of 12 cases, counted once; file count only — nothing about what the documents contain or whether a file is a usable document.
+- **Next step:** none — a descriptive count; the agent audit falls due when the number goes into a note or steers a decision.
 
 ## Intent (before the run)
 
@@ -24,9 +15,7 @@
 
 ## Result (after the run — write back, don't go quiet)
 
-- **Answer to the question:** <per registered id its verdict, and the
-  run_id; numbers as a small table below the label (one row per arm or
-  condition), produced by `analysis/<note>.py --check`, never retyped>
+- **Answer to the question:** run 2026-10-12T18-19-07_7d0d — `mean_docs_per_case` = 3.5 over `n_cases` = 12 cases (42 documents); [C1] `c1_pass` = true, [A1] `a1_pass` = true. Per case (`doc_count`): antrag-01 4 · 02 4 · 03 3 · 04 4 · 05 4 · 06 3 · 07 2 · 08 3 · 09 4 · 10 3 · 11 2 · 12 6 — from `output/docs-per-case.jsonl`, held by `01_measure.py --check`.
 
 ## Setup
 
@@ -36,7 +25,8 @@
 
 ## Runs (documented runs — via `runlog`, cite run_ids instead of retyping numbers)
 
-- <run_id> — <one sentence: what this run was>
+- 2026-10-12T18-18-42_ba22 — first pass, same number; lock hash had drift:1 (labkit commit in the lock differed from the installed one), superseded.
+- 2026-10-12T18-19-07_7d0d — the reported run: all 12 cases counted after the lock was refrozen, drift:0.
 
 ## Head (read by the checks)
 
