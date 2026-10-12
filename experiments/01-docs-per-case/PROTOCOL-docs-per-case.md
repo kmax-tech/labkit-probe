@@ -6,8 +6,8 @@
 
 ## Intent (before the run)
 
-- **Terms of this protocol:** <first, because the question uses them…>
-- **Question / hypothesis:** <the one question — what do we expect?>
+- **Terms of this protocol:** *case* — one line of `data/raw/cases.jsonl` (a `case_id` and an `inputs` root); *document* — one visible regular file directly under `<inputs>/<case_id>/` (no hidden entries, no nested directories); *mean_docs_per_case* — the key in metrics.json: sum of documents over the cases, divided by the number of cases the source lists.
+- **Question / hypothesis:** How many input documents does a case carry on average? Exploratory: a descriptive count with no expected value; it is the denominator for later per-document costs.
 
 ## Result (after the run — write back, don't go quiet)
 
@@ -15,9 +15,9 @@
 
 ## Setup
 
-- **Data / scope:** <source, N, producer script; pilot subset first>
-- **Exclusions / filters:** <what is dropped from the data or output and why…>
-- **Unit:** <what one counted or judged thing is…>
+- **Data / scope:** `data/raw/cases.jsonl` (N = 12 cases, all of them); the documents under `data/raw/inputs/<case_id>/`; counted by `scripts/01_measure.py`; no pilot subset — the full run takes seconds.
+- **Exclusions / filters:** Hidden entries (names starting with `.`) and nested directories are not documents (`visible()`); nothing else is dropped. A case whose directory is missing or empty aborts the run instead of counting as 0.
+- **Unit:** One case; the per-case count is the number of visible regular files directly under `<inputs>/<case_id>/`.
 
 ## Runs (documented runs — via `runlog`, cite run_ids instead of retyping numbers)
 
@@ -37,7 +37,7 @@ label with `protocol-fill PROTOCOL-<name>.md "<label>" "<value>"`.*
 [protocol]
 standard = "0.19"
 id = "p-2d9bd6121bde43ad"
-type = "<exploratory | confirmatory>"
+type = "exploratory"
 cost = "seconds"
 frozen = false
 preflight_audit = ""
