@@ -8,6 +8,8 @@
 
 - **Terms of this protocol:** a *case* is one line of `data/raw/cases.jsonl` (fields `case_id`, `inputs`); a case's *documents* are the visible regular files directly under `<inputs>/<case_id>/` (`inputs` relative to the repo root); `mean_docs_per_case` is the arithmetic mean of the per-case document count over all listed cases.
 - **Question / hypothesis:** What is the mean number of input documents per case over the cases in `data/raw/cases.jsonl`? A descriptive count, no expectation registered.
+- **Success / failure criterion:** n/a — a descriptive count with no hypothesis; the number is the answer whatever its value, no verdict is issued.
+- **Admissibility condition:** every case listed in `data/raw/cases.jsonl` has a directory `<inputs>/<case_id>/` with at least one visible document; a missing or empty one aborts the run (`rows()` refuses), because then the denominator would no longer be the source's case list and the mean would be over a different population.
 
 ## Result (after the run — write back, don't go quiet)
 
