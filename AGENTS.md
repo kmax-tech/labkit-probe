@@ -1,4 +1,4 @@
-# AGENTS.md — probe-0862
+# AGENTS.md — probe-087
 
 Entry file for any coding agent in this lab repo (`CLAUDE.md` may be a
 symlink to it). The rules behind every step are the lab standard that ships

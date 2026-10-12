@@ -16,9 +16,8 @@ Intent; if it needs an "and", it is two experiments>
 
 ## Contract
 
-**What `evaluate_rows()` returns.** <the number under `METRIC_KEY` and per
-registered promise its key — from the protocol's [[promise]] sentences: [C1]
-c1_pass …, [A1] a1_pass …>. The formula lives once, in `scripts/01_measure.py`;
+**What `evaluate_rows()` returns.** <the number under `METRIC_KEY` — and,
+only if the protocol registers ids, one key per id>. The formula lives once, in `scripts/01_measure.py`;
 `--check` and the test call it, `intent-check` and `finalize` hold the ids to
 these keys.
 
