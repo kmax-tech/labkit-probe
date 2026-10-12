@@ -2,8 +2,9 @@
 
 *Self-contained: data, scripts, output and this description live here.*
 
-**The one question.** <one sentence — the same question as in the protocol's
-Intent; if it needs an "and", it is two experiments>
+**The one question.** How many input documents does a case carry on average —
+the mean over the cases in `data/raw/cases.jsonl` of the visible files under
+`<inputs>/<case_id>/`?
 
 <!-- labkit:route -->
 **Trace it.**
@@ -16,9 +17,10 @@ Intent; if it needs an "and", it is two experiments>
 
 ## Contract
 
-**What `evaluate_rows()` returns.** <the number under `METRIC_KEY` and per
-registered promise its key — from the protocol's [[promise]] sentences: [C1]
-c1_pass …, [A1] a1_pass …>. The formula lives once, in `scripts/01_measure.py`;
+**What `evaluate_rows()` returns.** `mean_docs_per_case` (the number under
+`METRIC_KEY`), `n_cases`, and per registered promise its key: [C1] `c1_pass`
+— one number over exactly the listed ids, greater than zero; [A1] `a1_pass`
+— every case holds at least one visible document. The formula lives once, in `scripts/01_measure.py`;
 `--check` and the test call it, `intent-check` and `finalize` hold the ids to
 these keys.
 
@@ -28,6 +30,6 @@ through `runlog` · `finalize` · number + run_id into the protocol · `01_measu
 
 ## State
 
-- [ ] Registration written in the protocol (**before** the first run)
-- [ ] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
+- [x] Registration written in the protocol (**before** the first run)
+- [x] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
 - [ ] Run, `finalize` green, number + run_id in the protocol

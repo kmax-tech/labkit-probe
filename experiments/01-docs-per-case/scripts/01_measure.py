@@ -10,7 +10,7 @@ the number is promoted or steers a decision (LAB-017 The number of audits follow
 retyped (LAB-041 Generate numbers, don't retype them): the protocol's Result line cites it with the run_id, and
 `--check` holds that line to the run.
 
-Fill the three TODOs: expected_ids(), rows(), evaluate_rows(). Everything else
+expected_ids(), rows(), evaluate_rows() are filled. Everything else
 stays — `visible()` is the one reader of a directory, the denominator is the
 source's id list, a missing item is a refusal.
 """
@@ -25,10 +25,10 @@ from labkit import recheck, runlog
 AREA = Path(__file__).resolve().parent.parent
 REPO = AREA.parent.parent
 PROTOCOL = AREA / "PROTOCOL-docs-per-case.md"
-SOURCE = REPO / "data" / "TODO"                 # what is counted — a file or a directory
+SOURCE = REPO / "data" / "raw" / "cases.jsonl"  # the case list; each line names a case_id and its inputs root
 OUT = AREA / "output" / "docs-per-case.jsonl"          # one row per item, written by this script
-COUNT_FIELD = "TODO_count"                      # the per-item number in each row
-METRIC_KEY = "TODO_mean"                        # the kept number's key in metrics.json; the test reads both names from here
+COUNT_FIELD = "docs"                            # the per-item number in each row: visible files under <inputs>/<case_id>/
+METRIC_KEY = "mean_docs_per_case"               # the kept number's key in metrics.json; the test reads both names from here
 
 
 def visible(directory: Path) -> list[Path]:
@@ -39,16 +39,44 @@ def visible(directory: Path) -> list[Path]:
     return sorted(p for p in directory.iterdir() if p.is_file() and not p.name.startswith("."))
 
 
+def cases() -> list[dict]:
+    """The lines of SOURCE, one dict per case: `case_id` and `inputs` (a
+    directory relative to the repo root). A line without both is a refusal."""
+    out = []
+    for n, line in enumerate(SOURCE.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        rec = json.loads(line)
+        if "case_id" not in rec or "inputs" not in rec:
+            raise ValueError(f"{SOURCE.name}:{n}: a case needs `case_id` and `inputs`, got {sorted(rec)}")
+        out.append(rec)
+    ids = [c["case_id"] for c in out]
+    if len(set(ids)) != len(ids):
+        raise ValueError(f"{SOURCE.name}: duplicate case_id — the denominator would count a case twice")
+    return out
+
+
 def expected_ids() -> list[str]:
-    """TODO: the ids the number is over, read from SOURCE — the denominator
+    """The ids the number is over, read from SOURCE — the denominator
     comes from the source, never from the rows that happened to be produced."""
-    raise NotImplementedError("expected_ids(): the ids SOURCE lists")
+    return [c["case_id"] for c in cases()]
 
 
 def rows(ids: list[str]) -> list[dict]:
-    """TODO: one row per id — the raw material of the number. A missing or
-    empty item is a refusal, not a skipped row."""
-    raise NotImplementedError("rows(): one dict per id, fail loud on a missing one")
+    """One row per id — the raw material of the number: the count of visible
+    files under `<inputs>/<case_id>/`. A missing or empty case directory is
+    a refusal, not a skipped row or a zero."""
+    by_id = {c["case_id"]: c for c in cases()}
+    out = []
+    for cid in ids:
+        case_dir = REPO / by_id[cid]["inputs"] / cid
+        if not case_dir.is_dir():
+            raise FileNotFoundError(f"{cid}: no directory {case_dir.relative_to(REPO)}")
+        docs = visible(case_dir)
+        if not docs:
+            raise ValueError(f"{cid}: {case_dir.relative_to(REPO)} holds no visible file — an empty case is a refusal")
+        out.append({"id": cid, COUNT_FIELD: len(docs)})
+    return out
 
 
 def evaluate_rows(items: list[dict], ids: list[str]) -> dict:
@@ -61,7 +89,14 @@ def evaluate_rows(items: list[dict], ids: list[str]) -> dict:
         raise ValueError("evaluate_rows(): SOURCE lists no ids — refusing a number over nothing")
     if len(items) != len(ids):
         raise ValueError(f"evaluate_rows(): {len(items)} rows for {len(ids)} ids — a silent loss")
-    raise NotImplementedError("evaluate_rows(): compute the number(s) from items")
+    if [r["id"] for r in items] != list(ids):
+        raise ValueError("evaluate_rows(): the rows' ids are not the ids SOURCE lists, in its order")
+    counts = [int(r[COUNT_FIELD]) for r in items]
+    # [A1] every case contributes a count of at least one visible file (rows() refuses otherwise)
+    a1_pass = all(c >= 1 for c in counts)
+    # [C1] the mean exists and is one number over exactly the ids SOURCE lists
+    mean = sum(counts) / len(ids)
+    return {METRIC_KEY: mean, "n_cases": len(ids), "c1_pass": a1_pass and mean > 0, "a1_pass": a1_pass}
 
 
 def main() -> None:
