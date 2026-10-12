@@ -49,7 +49,6 @@
 - **Answer to the question:** <per registered id its verdict, and the
   run_id; numbers as a small table below the label (one row per arm or
   condition), produced by `analysis/<note>.py --check`, never retyped>
-- **Raw output:** <one real prompt+answer pair per finding>
 
 ## Setup
 
@@ -76,7 +75,7 @@ label with `protocol-fill PROTOCOL-<name>.md "<label>" "<value>"`.*
 ```toml
 [protocol]
 standard = "0.19"
-id = "p-3da58c4a121d4883"
+id = "p-6528effe1d4e41bd"
 type = "<exploratory | confirmatory>"
 cost = "seconds"
 frozen = false
