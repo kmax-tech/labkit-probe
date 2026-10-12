@@ -27,4 +27,4 @@ through `runlog` · `finalize` · number + run_id into the protocol · `01_measu
 
 - [x] Registration written in the protocol (**before** the first run)
 - [x] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
-- [ ] Run, `finalize` green, number + run_id in the protocol
+- [x] Run, `finalize` green, number + run_id in the protocol

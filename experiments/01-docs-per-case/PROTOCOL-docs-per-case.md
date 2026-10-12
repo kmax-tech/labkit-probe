@@ -2,7 +2,7 @@
 
 ## Summary (after the run, for a person)
 
-- **Result:** <the answer to the question above, in at most two plain sentences…>
+- **Result:** A case carries 3.5 input documents on average (12 cases, 42 documents; run 2026-10-12T20-59-27_6f9d). Counts range from 2 to 6 per case.
 
 ## Intent (before the run)
 
@@ -11,7 +11,7 @@
 
 ## Result (after the run — write back, don't go quiet)
 
-- **Answer to the question:** <per registered id its verdict, and the run_id…>
+- **Answer to the question:** mean_docs_per_case = 3.5 (run 2026-10-12T20-59-27_6f9d; 42 documents over 12 cases, per-case counts 2–6).
 
 ## Setup
 
@@ -21,7 +21,7 @@
 
 ## Runs (documented runs — via `runlog`, cite run_ids instead of retyping numbers)
 
-- <run_id> — <one sentence: what this run was>
+- 2026-10-12T20-59-27_6f9d — the one measure run over all 12 cases; its metrics.json carries mean_docs_per_case.
 
 ## Head (read by the checks)
 
