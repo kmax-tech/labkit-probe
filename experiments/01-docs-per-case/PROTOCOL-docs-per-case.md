@@ -6,8 +6,8 @@
 
 ## Intent (before the run)
 
-- **Terms of this protocol:** <first, because the question uses them…>
-- **Question / hypothesis:** <the one question — what do we expect?>
+- **Terms of this protocol:** a *case* is one line of `data/raw/cases.jsonl` (fields `case_id`, `inputs`); a case's *documents* are the visible regular files directly under `<inputs>/<case_id>/` (`inputs` relative to the repo root); `mean_docs_per_case` is the arithmetic mean of the per-case document count over all listed cases.
+- **Question / hypothesis:** What is the mean number of input documents per case over the cases in `data/raw/cases.jsonl`? A descriptive count, no expectation registered.
 
 ## Result (after the run — write back, don't go quiet)
 
@@ -15,9 +15,9 @@
 
 ## Setup
 
-- **Data / scope:** <source, N, producer script; pilot subset first>
-- **Exclusions / filters:** <what is dropped from the data or output and why…>
-- **Unit:** <what one counted or judged thing is…>
+- **Data / scope:** `data/raw/cases.jsonl` (N = 12 cases, all of them, ids antrag-01…antrag-12) and the directories `data/raw/inputs/<case_id>/`; producer `scripts/01_measure.py`, no pilot subset (seconds, one deterministic pass).
+- **Exclusions / filters:** hidden entries (names starting with `.`) and nested directories under a case directory are not counted (`visible()`); a case without a directory or with zero documents aborts the run instead of being dropped.
+- **Unit:** one counted thing is one visible regular file directly under `<inputs>/<case_id>/`, whatever its extension or content; the number is the mean of these counts per case.
 
 ## Runs (documented runs — via `runlog`, cite run_ids instead of retyping numbers)
 
@@ -34,10 +34,14 @@ protocol's `cost` owes, and which fall due after a documented run:
 label with `protocol-fill PROTOCOL-<name>.md "<label>" "<value>"`.*
 
 ```toml
+# A plain count registers no promise (field guide: a count without a model
+# registers no promise and no criterion) — the tables are declared, and empty.
+promise = []
+
 [protocol]
 standard = "0.19"
 id = "p-cff1eb3cd1d84ea3"
-type = "<exploratory | confirmatory>"
+type = "exploratory"
 cost = "seconds"
 frozen = false
 preflight_audit = ""

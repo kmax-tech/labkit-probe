@@ -10,7 +10,7 @@ the number is promoted or steers a decision (LAB-017 The number of audits follow
 retyped (LAB-041 Generate numbers, don't retype them): the protocol's Result line cites it with the run_id, and
 `--check` holds that line to the run.
 
-Fill the three TODOs: expected_ids(), rows(), evaluate_rows(). Everything else
+expected_ids(), rows(), evaluate_rows() are filled for cases.jsonl. Everything else
 stays — `visible()` is the one reader of a directory, the denominator is the
 source's id list, a missing item is a refusal.
 """
@@ -25,10 +25,10 @@ from labkit import recheck, runlog
 AREA = Path(__file__).resolve().parent.parent
 REPO = AREA.parent.parent
 PROTOCOL = AREA / "PROTOCOL-docs-per-case.md"
-SOURCE = REPO / "data" / "TODO"                 # what is counted — a file or a directory
+SOURCE = REPO / "data" / "raw" / "cases.jsonl"  # what is counted — one case per line
 OUT = AREA / "output" / "docs-per-case.jsonl"          # one row per item, written by this script
-COUNT_FIELD = "TODO_count"                      # the per-item number in each row
-METRIC_KEY = "TODO_mean"                        # the kept number's key in metrics.json; the test reads both names from here
+COUNT_FIELD = "n_docs"                          # the per-item number in each row
+METRIC_KEY = "mean_docs_per_case"               # the kept number's key in metrics.json; the test reads both names from here
 
 
 def visible(directory: Path) -> list[Path]:
@@ -40,19 +40,38 @@ def visible(directory: Path) -> list[Path]:
 
 
 def expected_ids() -> list[str]:
-    """TODO: the ids the number is over, read from SOURCE — the denominator
-    comes from the source, never from the rows that happened to be produced."""
-    raise NotImplementedError("expected_ids(): the ids SOURCE lists")
+    """The case_ids SOURCE lists, in file order — the denominator comes from
+    the source, never from the rows that happened to be produced."""
+    ids = [rec["case_id"] for rec in _cases()]
+    if len(set(ids)) != len(ids):
+        raise ValueError(f"expected_ids(): duplicate case_id in {SOURCE.name}")
+    return ids
+
+
+def _cases() -> list[dict]:
+    """The records of SOURCE, one per non-blank line."""
+    return [json.loads(line) for line in SOURCE.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
 def rows(ids: list[str]) -> list[dict]:
-    """TODO: one row per id — the raw material of the number. A missing or
-    empty item is a refusal, not a skipped row."""
-    raise NotImplementedError("rows(): one dict per id, fail loud on a missing one")
+    """One row per case: its id and the number of visible files under
+    `<inputs>/<case_id>/` (`inputs` is the case's own field, relative to the
+    repo root). A missing or empty case directory is a refusal, not a row."""
+    inputs = {rec["case_id"]: rec["inputs"] for rec in _cases()}
+    out = []
+    for case_id in ids:
+        case_dir = REPO / inputs[case_id] / case_id
+        if not case_dir.is_dir():
+            raise FileNotFoundError(f"rows(): no directory for case {case_id!r}: {case_dir}")
+        docs = visible(case_dir)
+        if not docs:
+            raise ValueError(f"rows(): case {case_id!r} has no documents under {case_dir}")
+        out.append({"id": case_id, "inputs": inputs[case_id], COUNT_FIELD: len(docs)})
+    return out
 
 
 def evaluate_rows(items: list[dict], ids: list[str]) -> dict:
-    """TODO: the number(s) from the rows, over the ids SOURCE lists — and,
+    """The mean of COUNT_FIELD over the ids SOURCE lists — and,
     only if the protocol registers ids (a model in the loop), one key per id
     (`c1_pass`); a plain count registers none. Every key lands in
     metrics.json, and `--check` demands each verbatim in the protocol's
@@ -61,7 +80,11 @@ def evaluate_rows(items: list[dict], ids: list[str]) -> dict:
         raise ValueError("evaluate_rows(): SOURCE lists no ids — refusing a number over nothing")
     if len(items) != len(ids):
         raise ValueError(f"evaluate_rows(): {len(items)} rows for {len(ids)} ids — a silent loss")
-    raise NotImplementedError("evaluate_rows(): compute the number(s) from items")
+    by_id = {r["id"]: r for r in items}
+    missing = [i for i in ids if i not in by_id]
+    if missing:
+        raise ValueError(f"evaluate_rows(): no row for {missing} — a silent loss")
+    return {METRIC_KEY: sum(by_id[i][COUNT_FIELD] for i in ids) / len(ids)}
 
 
 def main() -> None:
