@@ -21,7 +21,7 @@
   them: one line per house word — *everyday word · house term · code word*
   ("gap case (a case only an uncovered rule can reject) · Lückenfall ·
   `GAP_CASES`"); look up before coining (the field's established term, then
-  `notes/theorie/begriffe.md`, then the lab standard's vocabulary table);
+  `notes/theorie/terms.md`, then the lab standard's vocabulary table);
   "n/a — standard vocabulary" only if nothing is coined>
 - **Question / hypothesis:** <the one question — what do we expect?>
 - **Success / failure criterion:** <how do we recognise whether it worked?
@@ -76,7 +76,7 @@ label with `protocol-fill PROTOCOL-<name>.md "<label>" "<value>"`.*
 ```toml
 [protocol]
 standard = "0.19"
-id = "p-8bed7d3a7e8441a3"
+id = "p-3da58c4a121d4883"
 type = "<exploratory | confirmatory>"
 cost = "seconds"
 frozen = false
@@ -93,16 +93,11 @@ id = "C1"
 key = "c1_pass"
 sentence = "<the criterion in one sentence: registered accuracy >= null accuracy + margin>"
 scope = ["scripts/01_measure.py"]
+# constants = { <name> = <value> }  # every threshold the sentence names, read with promises.all_constants() — none for a plain count
 
 [[promise]]
 id = "A1"
 key = "a1_pass"
 sentence = "<the yield condition: at most max_empty empty or unreadable answers on the registered lane>"
 scope = ["scripts/01_measure.py"]
-
-[[promise]]
-id = "A2"
-key = "a2_pass"
-sentence = "<the null condition: the null lane sits at chance, within null_band_items items>"
-scope = ["scripts/01_measure.py"]
-```
+# constants = { <name> = <value> }  # every threshold the sentence names, read with promises.all_constants() — none for a plain count
