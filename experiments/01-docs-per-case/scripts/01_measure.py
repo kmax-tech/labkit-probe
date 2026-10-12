@@ -10,9 +10,8 @@ the number is promoted or steers a decision (LAB-017 The number of audits follow
 retyped (LAB-041 Generate numbers, don't retype them): the protocol's Result line cites it with the run_id, and
 `--check` holds that line to the run.
 
-Fill the three TODOs: expected_ids(), rows(), evaluate_rows(). Everything else
-stays — `visible()` is the one reader of a directory, the denominator is the
-source's id list, a missing item is a refusal.
+`visible()` is the one reader of a directory, the denominator is the source's
+id list (`data/raw/cases.jsonl`), a missing item is a refusal.
 """
 from __future__ import annotations
 
@@ -25,10 +24,10 @@ from labkit import recheck, runlog
 AREA = Path(__file__).resolve().parent.parent
 REPO = AREA.parent.parent
 PROTOCOL = AREA / "PROTOCOL-docs-per-case.md"
-SOURCE = REPO / "data" / "TODO"                 # what is counted — a file or a directory
+SOURCE = REPO / "data" / "raw" / "cases.jsonl"  # what is counted — one case per line, `inputs` names the root of its documents
 OUT = AREA / "output" / "docs-per-case.jsonl"          # one row per item, written by this script
-COUNT_FIELD = "TODO_count"                      # the per-item number in each row
-METRIC_KEY = "TODO_mean"                        # the kept number's key in metrics.json; the test reads both names from here
+COUNT_FIELD = "doc_count"                       # the per-item number in each row
+METRIC_KEY = "mean_docs_per_case"               # the kept number's key in metrics.json; the test reads both names from here
 
 
 def visible(directory: Path) -> list[Path]:
@@ -39,20 +38,49 @@ def visible(directory: Path) -> list[Path]:
     return sorted(p for p in directory.iterdir() if p.is_file() and not p.name.startswith("."))
 
 
+def cases() -> list[dict]:
+    """The lines of SOURCE as dicts — `case_id` and `inputs` (relative to the repo root)."""
+    out = []
+    for n, line in enumerate(SOURCE.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        for k in ("case_id", "inputs"):
+            if not row.get(k):
+                raise ValueError(f"{SOURCE.name}:{n}: field {k!r} missing or empty")
+        out.append(row)
+    return out
+
+
 def expected_ids() -> list[str]:
-    """TODO: the ids the number is over, read from SOURCE — the denominator
+    """The ids the number is over, read from SOURCE — the denominator
     comes from the source, never from the rows that happened to be produced."""
-    raise NotImplementedError("expected_ids(): the ids SOURCE lists")
+    ids = [c["case_id"] for c in cases()]
+    if len(set(ids)) != len(ids):
+        raise ValueError(f"{SOURCE.name}: duplicate case_id")
+    return ids
 
 
 def rows(ids: list[str]) -> list[dict]:
-    """TODO: one row per id — the raw material of the number. A missing or
-    empty item is a refusal, not a skipped row."""
-    raise NotImplementedError("rows(): one dict per id, fail loud on a missing one")
+    """One row per id — the raw material of the number: the count of visible
+    files under `<inputs>/<case_id>/`. A missing directory or an empty case is
+    a refusal, not a skipped row (the Unit field says what counts)."""
+    by_id = {c["case_id"]: c for c in cases()}
+    out = []
+    for cid in ids:
+        directory = REPO / by_id[cid]["inputs"] / cid
+        if not directory.is_dir():
+            raise FileNotFoundError(f"rows(): case {cid!r}: no directory {directory.relative_to(REPO)}")
+        docs = visible(directory)
+        if not docs:
+            raise ValueError(f"rows(): case {cid!r}: no documents under {directory.relative_to(REPO)}")
+        out.append({"id": cid, "inputs": by_id[cid]["inputs"], COUNT_FIELD: len(docs),
+                    "documents": [p.name for p in docs]})
+    return out
 
 
 def evaluate_rows(items: list[dict], ids: list[str]) -> dict:
-    """TODO: the number(s) from the rows, over the ids SOURCE lists, plus one
+    """The number(s) from the rows, over the ids SOURCE lists, plus one
     key per intent id the protocol registers (`c1_pass`, `a1_pass`) —
     intent-check and finalize hold the ids to these keys. Every key lands in
     metrics.json, and `--check` demands each verbatim in the protocol's
@@ -61,7 +89,16 @@ def evaluate_rows(items: list[dict], ids: list[str]) -> dict:
         raise ValueError("evaluate_rows(): SOURCE lists no ids — refusing a number over nothing")
     if len(items) != len(ids):
         raise ValueError(f"evaluate_rows(): {len(items)} rows for {len(ids)} ids — a silent loss")
-    raise NotImplementedError("evaluate_rows(): compute the number(s) from items")
+    if sorted(r["id"] for r in items) != sorted(ids):
+        raise ValueError("evaluate_rows(): the rows' ids are not the ids SOURCE lists")
+    counts = [int(r[COUNT_FIELD]) for r in items]
+    # [A1] every listed case contributed a count of at least one document —
+    # a case without documents has no "documents per case" to speak of.
+    a1_pass = all(c >= 1 for c in counts)
+    # [C1] the mean is one finite number over exactly the n_cases cases SOURCE lists.
+    mean = sum(counts) / len(counts)
+    c1_pass = a1_pass and len(counts) == len(ids)
+    return {METRIC_KEY: mean, "n_cases": len(ids), "c1_pass": c1_pass, "a1_pass": a1_pass}
 
 
 def main() -> None:

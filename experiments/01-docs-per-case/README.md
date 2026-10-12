@@ -2,8 +2,8 @@
 
 *Self-contained: data, scripts, output and this description live here.*
 
-**The one question.** <one sentence — the same question as in the protocol's
-Intent; if it needs an "and", it is two experiments>
+**The one question.** How many input documents does a case carry on average
+over the cases `data/raw/cases.jsonl` lists?
 
 <!-- labkit:route -->
 **Trace it.**
@@ -16,9 +16,10 @@ Intent; if it needs an "and", it is two experiments>
 
 ## Contract
 
-**What `evaluate_rows()` returns.** <the number under `METRIC_KEY` and per
-registered promise its key — from the protocol's [[promise]] sentences: [C1]
-c1_pass …, [A1] a1_pass …>. The formula lives once, in `scripts/01_measure.py`;
+**What `evaluate_rows()` returns.** `mean_docs_per_case` (the number) and
+`n_cases`; per registered promise its key: [C1] `c1_pass` — the mean is over
+exactly the listed cases, [A1] `a1_pass` — every case has at least one visible
+document. The formula lives once, in `scripts/01_measure.py`;
 `--check` and the test call it, `intent-check` and `finalize` hold the ids to
 these keys.
 
