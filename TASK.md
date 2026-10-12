@@ -1,0 +1,34 @@
+# TASK — one kept number
+
+You are a researcher new to this lab repository. Work only inside this
+directory; use `.venv/bin/python`. You may commit (never push). Do not
+ask questions; make reasonable choices and note them in your report.
+
+**The number.** The mean number of input documents per case over the
+cases in `data/raw/cases.jsonl`. A case's documents are the files under
+`<inputs>/<case_id>/` (`inputs` is the field in that file, relative to the
+repo root). Deterministic, seconds, no model calls — and it must be KEPT
+the way this repo keeps numbers, so it can be cited later: the run's
+`metrics.json` carries it under the key `mean_docs_per_case`. The area
+`experiments/01-docs-per-case/` is already stamped for it.
+
+Follow the repo's own rules: `CLAUDE.md` is in your context already (as a
+session loads it), the lab standard holds the long form
+(`python -m labkit.rules show LAB-nnn`) — read what you need, no more.
+
+**The log** matters as much as the number. Append to `/Users/max/projects/labkit-probe.log.md` ONE line
+BEFORE each step (`touch` it first; append with `>>`):
+
+    HH:MM:SS · <tag> · <the step, in a few words>
+
+tags: `read` (a file you open) · `run` (a command) · `edit` (a file you
+write) · `unsure` (the rules leave you guessing) · `gate` (a check, hook
+or refusal makes you change course). `date '+%H:%M:%S'` gives the time.
+Every step gets a line; the log is the measurement.
+
+**Report** when done, with these headings: (1) the number, the run_id and
+where the number lives · (2) files read with line counts, commands run,
+edits made, wall-clock · (3) the three biggest time sinks, each with the
+concrete cause · (4) what you had to guess · (5) what you would cut so
+that one kept number takes under 5 minutes. Honest, not a success
+story.
