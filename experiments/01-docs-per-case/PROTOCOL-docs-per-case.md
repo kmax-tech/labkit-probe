@@ -2,18 +2,9 @@
 
 ## Summary (after the run, for a person)
 
-- **Result:** <the answer to the question above, in at most two
-  plain sentences: whether the bar set before the run was met ("Yes — the
-  class descriptions kept the cable set out of the framework class in all
-  five cases, as required") — or that no verdict was possible because an
-  admissibility condition failed, and what was still read descriptively;
-  the result, not the procedure; no intent ids, metric keys or run_ids,
-  they are below>
-- **Limits:** <how far it holds, one sentence — the sample, a
-  single run, what was not tested; a deviation after the freeze that
-  touches the verdict is named here too>
-- **Next step:** <what follows — a decision, the next experiment,
-  or "none">
+- **Result:** A case carries 3.5 input documents on average over the 12 cases; the bar set before the run (one number over every listed case, every case non-empty) was met.
+- **Limits:** Twelve fixture cases in one deterministic run; counts files, not their content, so an empty or duplicate file counts as a document.
+- **Next step:** none — the number is kept; the agent audit falls due when it is cited in a note or steers a decision.
 
 ## Intent (before the run)
 
@@ -24,9 +15,7 @@
 
 ## Result (after the run — write back, don't go quiet)
 
-- **Answer to the question:** <per registered id its verdict, and the
-  run_id; numbers as a small table below the label (one row per arm or
-  condition), produced by `analysis/<note>.py --check`, never retyped>
+- **Answer to the question:** run `2026-10-12T18-05-53_a5bc` — `mean_docs_per_case` = 3.5 over `n_cases` = 12; [C1] `c1_pass` = true (one number over exactly the 12 listed ids, > 0); [A1] `a1_pass` = true (every case directory holds at least one visible document; per-case counts in `output/docs-per-case.jsonl`: 2 to 6).
 
 ## Setup
 
@@ -36,7 +25,7 @@
 
 ## Runs (documented runs — via `runlog`, cite run_ids instead of retyping numbers)
 
-- <run_id> — <one sentence: what this run was>
+- `2026-10-12T18-05-53_a5bc` — the one counting run over all 12 cases, at commit 7f1f98a; the reported run.
 
 ## Head (read by the checks)
 

@@ -3,8 +3,8 @@
 *Self-contained: data, scripts, output and this description live here.*
 
 **The one question.** How many input documents does a case carry on average —
-the mean over the cases in `data/raw/cases.jsonl` of the visible files under
-`<inputs>/<case_id>/`?
+the mean over the cases in `data/raw/cases.jsonl` of the visible files in each
+case's directory under its `inputs` root?
 
 <!-- labkit:route -->
 **Trace it.**
@@ -32,4 +32,4 @@ through `runlog` · `finalize` · number + run_id into the protocol · `01_measu
 
 - [x] Registration written in the protocol (**before** the first run)
 - [x] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
-- [ ] Run, `finalize` green, number + run_id in the protocol
+- [x] Run, `finalize` green, number + run_id in the protocol
