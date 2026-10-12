@@ -12,3 +12,14 @@
 17:33:56 · edit · PROTOCOL head: type = exploratory, [[promise]] sentences C1/A1
 17:34:06 · edit · README.md of the area: the one question, contract line
 17:34:06 · run · git commit (area filled, before the run)
+17:34:10 · run · the run: .venv/bin/python experiments/01-docs-per-case/scripts/01_measure.py
+17:34:21 · gate · runlog warns: 5 packages deviate from requirements.lock → inspect run dir and pip freeze
+17:34:21 · read · runs/<id>/ files, pip freeze vs requirements.lock
+17:34:29 · edit · requirements.lock refrozen (pip freeze) — drift was pytest + deps named in requirements.txt
+17:34:30 · run · rerun 01_measure.py against the refrozen lock (the rerun is the instrument check)
+17:34:45 · edit · PROTOCOL: Answer, Raw output, Result, Limits, Next step, Runs line (run 2026-10-12T17-34-30_cb32)
+17:34:45 · run · finalize experiments/01-docs-per-case; 01_measure.py --check
+17:34:59 · edit · README state boxes ticked
+17:34:59 · unsure · CLAUDE.md lane seconds names --show 2 and --probe; the seconds skeleton has neither flag — skipped both
+17:34:59 · unsure · C1 for a plain count: no threshold exists, registered as 'the mean over exactly the listed cases'
+17:34:59 · run · git commit (number, runs/, output/, lock, log.md) then git push -u origin probe-count

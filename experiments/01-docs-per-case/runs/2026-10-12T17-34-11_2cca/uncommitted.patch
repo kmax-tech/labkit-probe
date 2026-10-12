@@ -1,0 +1,9 @@
+diff --git a/log.md b/log.md
+index b24f79e..9c4d81b 100644
+--- a/log.md
++++ b/log.md
+@@ -12,3 +12,4 @@
+ 17:33:56 · edit · PROTOCOL head: type = exploratory, [[promise]] sentences C1/A1
+ 17:34:06 · edit · README.md of the area: the one question, contract line
+ 17:34:06 · run · git commit (area filled, before the run)
++17:34:10 · run · the run: .venv/bin/python experiments/01-docs-per-case/scripts/01_measure.py

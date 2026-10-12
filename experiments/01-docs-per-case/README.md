@@ -29,6 +29,6 @@ through `runlog` · `finalize` · number + run_id into the protocol · `01_measu
 
 ## State
 
-- [ ] Registration written in the protocol (**before** the first run)
-- [ ] `--probe` read, parser cases in the test
-- [ ] Run, `finalize` green, number + run_id in the protocol
+- [x] Registration written in the protocol (**before** the first run)
+- [x] `--probe` read, parser cases in the test (seconds: no --probe flag; the rerun was the instrument check, the stamped test holds the edges)
+- [x] Run, `finalize` green, number + run_id in the protocol

@@ -1,0 +1,24 @@
+diff --git a/log.md b/log.md
+index b24f79e..204a268 100644
+--- a/log.md
++++ b/log.md
+@@ -12,3 +12,8 @@
+ 17:33:56 · edit · PROTOCOL head: type = exploratory, [[promise]] sentences C1/A1
+ 17:34:06 · edit · README.md of the area: the one question, contract line
+ 17:34:06 · run · git commit (area filled, before the run)
++17:34:10 · run · the run: .venv/bin/python experiments/01-docs-per-case/scripts/01_measure.py
++17:34:21 · gate · runlog warns: 5 packages deviate from requirements.lock → inspect run dir and pip freeze
++17:34:21 · read · runs/<id>/ files, pip freeze vs requirements.lock
++17:34:29 · edit · requirements.lock refrozen (pip freeze) — drift was pytest + deps named in requirements.txt
++17:34:30 · run · rerun 01_measure.py against the refrozen lock (the rerun is the instrument check)
+diff --git a/requirements.lock b/requirements.lock
+index d4fb31e..9b90195 100644
+--- a/requirements.lock
++++ b/requirements.lock
+@@ -1 +1,6 @@
++iniconfig==2.3.1
+ labkit @ git+https://github.com/kmax-tech/labkit.git@193666546cbb00ffb74256fc175f904d5e3835ce
++packaging==26.3
++pluggy==1.6.0
++Pygments==2.21.0
++pytest==9.1.1

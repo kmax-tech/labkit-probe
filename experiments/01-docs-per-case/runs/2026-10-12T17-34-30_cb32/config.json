@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "experiment": "docs-per-case",
+  "script": "01_measure.py",
+  "protocol": {
+    "id": "p-3da58c4a121d4883",
+    "path": "PROTOCOL-docs-per-case.md"
+  },
+  "derived_from": null,
+  "unfrozen_ack": false,
+  "cost_tier": "seconds",
+  "promises": {
+    "block_sha": "e7290400268b",
+    "digest": "promises-normalized-json",
+    "ids": {
+      "C1": {
+        "key": "c1_pass",
+        "constants": {},
+        "scope": [
+          "scripts/01_measure.py"
+        ],
+        "declared_scope_sha": "1828386dc897"
+      },
+      "A1": {
+        "key": "a1_pass",
+        "constants": {},
+        "scope": [
+          "scripts/01_measure.py"
+        ],
+        "declared_scope_sha": "1828386dc897"
+      }
+    }
+  },
+  "script_sha": "fbe5b2779311",
+  "untracked_sources": [],
+  "pid": 742,
+  "git": "1175577+dirty",
+  "git_full": "1175577bb5f96dab5369979cddbc2737731cd271",
+  "python": "3.13.16",
+  "env": "/home/user/labkit-probe/experiments/01-docs-per-case/../../.venv/bin/python | requirements.lock:cf5ee5d4610a | drift:0",
+  "models_resolved": {},
+  "started": "2026-10-12T17:34:30",
+  "command": [
+    "scripts/01_measure.py"
+  ],
+  "data": {
+    "source": {
+      "path": "/home/user/labkit-probe/data/raw/cases.jsonl",
+      "sha256": "df51133132ec46c1",
+      "rows": 12
+    },
+    "leakage_check": "skipped: need >=2 of train/dev/test, or a control (anchor/gate/placebo) and a measured set, as .jsonl with an 'id' field per row"
+  },
+  "config": {
+    "source": "data/raw/cases.jsonl"
+  }
+}

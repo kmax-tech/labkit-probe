@@ -2,18 +2,9 @@
 
 ## Summary (after the run, for a person)
 
-- **Result:** <the answer to the question above, in at most two
-  plain sentences: whether the bar set before the run was met ("Yes — the
-  class descriptions kept the cable set out of the framework class in all
-  five cases, as required") — or that no verdict was possible because an
-  admissibility condition failed, and what was still read descriptively;
-  the result, not the procedure; no intent ids, metric keys or run_ids,
-  they are below>
-- **Limits:** <how far it holds, one sentence — the sample, a
-  single run, what was not tested; a deviation after the freeze that
-  touches the verdict is named here too>
-- **Next step:** <what follows — a decision, the next experiment,
-  or "none">
+- **Result:** A case carries 3.5 input documents on average over the 12 listed cases, every case with at least one document (range 2 to 6).
+- **Limits:** Holds for the 12 cases of `data/raw/cases.jsonl` as of this run and counts files, not their content or readability; a single deterministic run.
+- **Next step:** none — the number is kept; an agent audit falls due when it goes into a note or steers a decision.
 
 ## Intent (before the run)
 
@@ -24,10 +15,8 @@
 
 ## Result (after the run — write back, don't go quiet)
 
-- **Answer to the question:** <per registered id its verdict, and the
-  run_id; numbers as a small table below the label (one row per arm or
-  condition), produced by `analysis/<note>.py --check`, never retyped>
-- **Raw output:** <one real prompt+answer pair per finding>
+- **Answer to the question:** [C1] c1_pass = true, [A1] a1_pass = true — run 2026-10-12T17-34-30_cb32: mean_docs_per_case = 3.5, n_cases = 12 (from `runs/2026-10-12T17-34-30_cb32/metrics.json`; `scripts/01_measure.py --check` holds this line to it).
+- **Raw output:** n/a — no model; the per-case rows are `output/docs-per-case.jsonl` (e.g. `antrag-01`: doc_count 4, document-1.txt … document-4.txt).
 
 ## Setup
 
@@ -37,7 +26,8 @@
 
 ## Runs (documented runs — via `runlog`, cite run_ids instead of retyping numbers)
 
-- <run_id> — <one sentence: what this run was>
+- 2026-10-12T17-34-11_2cca — first run, same number; runlog warned of lock drift (pytest not in requirements.lock), superseded.
+- 2026-10-12T17-34-30_cb32 — the reported run, after refreezing requirements.lock: 12 cases, mean 3.5.
 
 ## Head (read by the checks)
 
