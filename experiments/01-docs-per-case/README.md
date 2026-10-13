@@ -2,8 +2,8 @@
 
 *Self-contained: data, scripts, output and this description live here.*
 
-**The one question.** <one sentence — the same question as in the protocol's
-Intent; if it needs an "and", it is two experiments>
+**The one question** is the protocol's Question field (`PROTOCOL-docs-per-case.md`);
+a count asks one and reports one number.
 
 <!-- labkit:route -->
 **Trace it.**
@@ -16,10 +16,10 @@ Intent; if it needs an "and", it is two experiments>
 
 ## Contract
 
-**What `evaluate_rows()` returns.** <the number under `METRIC_KEY` — and,
-only if the protocol registers ids, one key per id>. The formula lives once, in `scripts/01_measure.py`;
-`--check` and the test call it, `intent-check` and `finalize` hold the ids to
-these keys.
+**What `evaluate_rows()` returns.** The number under `METRIC_KEY` of
+`scripts/01_measure.py`; a count registers no ids. The formula lives once, there;
+`--check` and the test call it, and `finalize` holds the protocol's Answer line
+to the run's `metrics.json`.
 
 **The gates, in order.** `code-check` after every code change · at
 `minutes`/`hours`: `preflight` + the preflight audit, then freeze · the run
@@ -28,5 +28,5 @@ through `runlog` · `finalize` · `protocol-fill --from-run` writes the number b
 ## State
 
 - [ ] Registration written in the protocol (**before** the first run)
-- [ ] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
+- [ ] the area test green (`.venv/bin/python -m pytest tests/test_01_docs_per_case.py`)
 - [ ] Run, `protocol-fill --from-run`, `finalize` green
