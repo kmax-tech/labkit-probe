@@ -6,8 +6,8 @@
 
 ## Intent (before the run)
 
-- **Terms of this protocol:** <first, because the question uses them…>
-- **Question / hypothesis:** <the one question — what do we expect?>
+- **Terms of this protocol:** *case* — one line of `data/raw/cases.jsonl` (`case_id`, `inputs`); *input document* — one visible regular file directly under `<inputs>/<case_id>/` (no hidden entries, no nested directories); *mean_docs_per_case* — the kept key in metrics.json: total input documents over all cases divided by the number of cases the source lists.
+- **Question / hypothesis:** How many input documents does a case have on average — the mean number of input documents per case over the cases in `data/raw/cases.jsonl`? Descriptive count, no expectation registered.
 
 ## Result (after the run — write back, don't go quiet)
 
@@ -15,9 +15,9 @@
 
 ## Setup
 
-- **Data / scope:** <source, N, producer script; pilot subset first>
-- **Exclusions / filters:** <what is dropped from the data or output and why…>
-- **Unit:** <what one counted or judged thing is…>
+- **Data / scope:** `data/raw/cases.jsonl` (N = 12 cases, all of them — no pilot subset at cost seconds); documents are the files under `data/raw/inputs/<case_id>/` as the `inputs` field names them; producer `scripts/01_measure.py`, one row per case in `output/docs-per-case.jsonl`.
+- **Exclusions / filters:** Hidden entries (names starting with `.`) and nested directories under a case directory are not counted (`visible()`); a case listed in the source with no directory or no documents is a refusal, not a dropped row. Nothing else is filtered.
+- **Unit:** one input document = one visible regular file directly under `<inputs>/<case_id>/`; the number is averaged over cases (denominator = the source's case list).
 
 ## Runs (documented runs — via `runlog`, cite run_ids instead of retyping numbers)
 
@@ -37,7 +37,7 @@ label with `protocol-fill PROTOCOL-<name>.md "<label>" "<value>"`.*
 [protocol]
 standard = "0.19"
 id = "p-21ad4c89905e4020"
-type = "<exploratory | confirmatory>"
+type = "exploratory"
 cost = "seconds"
 frozen = false
 preflight_audit = ""

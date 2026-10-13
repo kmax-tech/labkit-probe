@@ -2,8 +2,8 @@
 
 *Self-contained: data, scripts, output and this description live here.*
 
-**The one question.** <one sentence — the same question as in the protocol's
-Intent; if it needs an "and", it is two experiments>
+**The one question.** What is the mean number of input documents per case over
+the cases in `data/raw/cases.jsonl`?
 
 <!-- labkit:route -->
 **Trace it.**
