@@ -2,7 +2,7 @@
 
 ## Summary (after the run, for a person)
 
-- **Result:** <the answer to the question above, in at most two plain sentences…>
+- **Result:** mean_docs_per_case = 3.5 (run 2026-10-13T08-30-13_be11)
 
 ## Intent (before the run)
 
@@ -11,7 +11,7 @@
 
 ## Result (after the run — write back, don't go quiet)
 
-- **Answer to the question:** <per registered id its verdict, and the run_id…>
+- **Answer to the question:** mean_docs_per_case = 3.5 (run 2026-10-13T08-30-13_be11)
 
 ## Setup
 
@@ -21,7 +21,7 @@
 
 ## Runs (documented runs — via `runlog`, cite run_ids instead of retyping numbers)
 
-- <run_id> — <one sentence: what this run was>
+- 2026-10-13T08-30-13_be11 — the kept run; its metrics.json is the number
 
 ## Head (read by the checks)
 

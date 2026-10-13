@@ -27,6 +27,6 @@ through `runlog` · `finalize` · `protocol-fill --from-run` writes the number b
 
 ## State
 
-- [ ] Registration written in the protocol (**before** the first run)
-- [ ] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
+- [x] Registration written in the protocol (**before** the first run)
+- [x] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
 - [ ] Run, `protocol-fill --from-run`, `finalize` green

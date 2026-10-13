@@ -1,0 +1,2 @@
+run_id	git	script	data	config	metrics	note	protocol_id
+2026-10-13T08-30-13_be11	9b52a3f+dirty	01_measure.py	{"leakage_check": "skipped: need >=2 of train/dev/test, or a control (anchor/gate/placebo) and a measured set, as .jsonl with an 'id' field per row", "source": {"path": "/home/user/labkit-probe/data/raw/cases.jsonl", "rows": 12, "sha256": "df51133132ec46c1"}}	{"source": "data/raw/cases.jsonl"}	{"duration_s": 0.1, "mean_docs_per_case": 3.5}		p-21ad4c89905e4020
