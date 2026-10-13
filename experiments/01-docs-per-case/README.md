@@ -23,10 +23,10 @@ these keys.
 
 **The gates, in order.** `code-check` after every code change · at
 `minutes`/`hours`: `preflight` + the preflight audit, then freeze · the run
-through `runlog` · `finalize` · number + run_id into the protocol · `01_measure.py --check`.
+through `runlog` · `finalize` · `protocol-fill --from-run` writes the number back · `01_measure.py --check`.
 
 ## State
 
 - [ ] Registration written in the protocol (**before** the first run)
 - [ ] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
-- [ ] Run, `finalize` green, number + run_id in the protocol
+- [ ] Run, `protocol-fill --from-run`, `finalize` green

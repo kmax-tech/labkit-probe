@@ -1,5 +1,5 @@
 iniconfig==2.3.1
-labkit @ git+https://github.com/kmax-tech/labkit.git@20c98d32a55d75d7c685517e81f284940fcf8df3
+labkit @ git+https://github.com/kmax-tech/labkit.git@5426509eacc6d86f9b18c3409c2cfdb82b100ac6
 packaging==26.3
 pluggy==1.6.0
 Pygments==2.21.0
