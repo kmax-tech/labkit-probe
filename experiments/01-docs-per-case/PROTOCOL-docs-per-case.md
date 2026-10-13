@@ -6,8 +6,8 @@
 
 ## Intent (before the run)
 
-- **Terms of this protocol:** <first, because the question uses them…>
-- **Question / hypothesis:** <the one question — what do we expect?>
+- **Terms of this protocol:** <one line per coined house word — or "n/a — no coinage">
+- **Question / hypothesis:** <the one question: what is counted, over which items — a count tests no hypothesis>
 
 ## Result (after the run — write back, don't go quiet)
 
@@ -36,7 +36,7 @@ label with `protocol-fill PROTOCOL-<name>.md "<label>" "<value>"`.*
 ```toml
 [protocol]
 standard = "0.19"
-id = "p-d10de447c8b34bb9"
+id = "p-60c41e7be92544d3"
 type = "<exploratory | confirmatory>"
 cost = "seconds"
 frozen = false
