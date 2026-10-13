@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "experiment": "docs-per-case",
+  "script": "01_measure.py",
+  "protocol": {
+    "id": "p-60c41e7be92544d3",
+    "path": "PROTOCOL-docs-per-case.md"
+  },
+  "derived_from": null,
+  "unfrozen_ack": false,
+  "cost_tier": "seconds",
+  "promises": null,
+  "script_sha": "b6893185a175",
+  "untracked_sources": [],
+  "pid": 624,
+  "git": "b34d834",
+  "git_full": "b34d834564ac7897822b7350386d3c482cffcfce",
+  "python": "3.13.16",
+  "env": "/home/user/labkit-probe/experiments/01-docs-per-case/../../.venv/bin/python | requirements.lock:fae12f39b7b3 | drift:0",
+  "models_resolved": {},
+  "started": "2026-10-13T19:12:08",
+  "command": [
+    "scripts/01_measure.py"
+  ],
+  "data": {
+    "source": {
+      "path": "/home/user/labkit-probe/data/raw/cases.jsonl",
+      "sha256": "df51133132ec46c1",
+      "rows": 12
+    },
+    "inputs": {
+      "path": "/home/user/labkit-probe/data/raw/inputs",
+      "sha256": "c75e6a9d6020b090",
+      "rows": 42
+    },
+    "leakage_check": "skipped: need >=2 of train/dev/test, or a control (anchor/gate/placebo) and a measured set, as .jsonl with an 'id' field per row"
+  },
+  "config": {
+    "source": "data/raw/cases.jsonl",
+    "inputs": "data/raw/inputs"
+  }
+}
