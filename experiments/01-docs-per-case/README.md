@@ -16,8 +16,9 @@ the cases in `data/raw/cases.jsonl`?
 
 ## Contract
 
-**What `evaluate_rows()` returns.** <the number under `METRIC_KEY` — and,
-only if the protocol registers ids, one key per id>. The formula lives once, in `scripts/01_measure.py`;
+**What `evaluate_rows()` returns.** One key, `mean_docs_per_case`: the sum of
+the per-case document counts (`n_docs`) divided by the number of cases the
+source lists; no ids are registered. The formula lives once, in `scripts/01_measure.py`;
 `--check` and the test call it, `intent-check` and `finalize` hold the ids to
 these keys.
 
@@ -29,4 +30,4 @@ through `runlog` · `finalize` · `protocol-fill --from-run` writes the number b
 
 - [x] Registration written in the protocol (**before** the first run)
 - [x] the area test green (`.venv/bin/python -m pytest tests/test_01_docs-per-case.py`)
-- [ ] Run, `protocol-fill --from-run`, `finalize` green
+- [x] Run, `protocol-fill --from-run`, `finalize` green
