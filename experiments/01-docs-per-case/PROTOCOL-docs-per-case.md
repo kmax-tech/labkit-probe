@@ -2,22 +2,22 @@
 
 ## Summary (after the run, for a person)
 
-- **Result:** <the answer to the question above, in at most two plain sentences…>
+- **Result:** pending run
 
 ## Intent (before the run)
 
-- **Terms of this protocol:** <one line per coined house word — or "n/a — no coinage">
-- **Question / hypothesis:** <the one question: what is counted, over which items — a count tests no hypothesis>
+- **Terms of this protocol:** n/a — no coinage
+- **Question / hypothesis:** What is the mean number of input documents per case over the 12 cases in data/raw/cases.jsonl?
 
 ## Result (after the run — write back, don't go quiet)
 
-- **Answer to the question:** <per registered id its verdict, and the run_id…>
+- **Answer to the question:** pending run
 
 ## Setup
 
-- **Data / scope:** <source, N, producer script; pilot subset first>
-- **Exclusions / filters:** <what is dropped from the data or output and why…>
-- **Unit:** <what one counted or judged thing is…>
+- **Data / scope:** data/raw/cases.jsonl (12 cases); documents under data/raw/inputs/<case_id>/; script scripts/01_measure.py
+- **Exclusions / filters:** none; hidden files and nested directories are not counted (visible())
+- **Unit:** one regular, non-hidden file directly under a case directory
 
 ## Runs (documented runs — via `runlog`, cite run_ids instead of retyping numbers)
 
@@ -37,7 +37,7 @@ label with `protocol-fill PROTOCOL-<name>.md "<label>" "<value>"`.*
 [protocol]
 standard = "0.19"
 id = "p-60c41e7be92544d3"
-type = "<exploratory | confirmatory>"
+type = "exploratory"
 cost = "seconds"
 frozen = false
 preflight_audit = ""

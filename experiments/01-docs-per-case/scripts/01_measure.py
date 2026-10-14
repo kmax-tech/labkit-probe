@@ -28,11 +28,11 @@ from labkit import recheck, runlog
 AREA = Path(__file__).resolve().parent.parent
 REPO = AREA.parent.parent
 PROTOCOL = AREA / "PROTOCOL-docs-per-case.md"
-SOURCE = REPO / "data" / "TODO"                 # what is counted — a file or a directory
-INPUTS = None                                   # TODO: a directory the rows read beyond SOURCE (REPO / "data" / "raw" / "inputs"), frozen with it; None when SOURCE is all the number reads
+SOURCE = REPO / "data" / "raw" / "cases.jsonl"                 # what is counted — a file or a directory
+INPUTS = REPO / "data" / "raw" / "inputs"       # the case directories the rows read beyond SOURCE, frozen with it
 OUT = AREA / "output" / "docs-per-case.jsonl"          # one row per item, written by this script
-COUNT_FIELD = "TODO_count"                      # the per-item number in each row
-METRIC_KEY = "TODO_mean"                        # the kept number's key in metrics.json; the test reads both names from here
+COUNT_FIELD = "n_docs"                      # the per-item number in each row
+METRIC_KEY = "mean_docs_per_case"                        # the kept number's key in metrics.json; the test reads both names from here
 
 
 def visible(directory: Path) -> list[Path]:
@@ -43,16 +43,29 @@ def visible(directory: Path) -> list[Path]:
     return sorted(p for p in directory.iterdir() if p.is_file() and not p.name.startswith("."))
 
 
+def _cases() -> list[dict]:
+    return [json.loads(l) for l in SOURCE.read_text(encoding="utf-8").splitlines() if l.strip()]
+
+
 def expected_ids() -> list[str]:
-    """TODO: the ids the number is over, read from SOURCE — the denominator
-    comes from the source, never from the rows that happened to be produced."""
-    raise NotImplementedError("expected_ids(): the ids SOURCE lists")
+    """The case ids SOURCE lists — the denominator comes from the source."""
+    return [c["case_id"] for c in _cases()]
 
 
 def rows(ids: list[str]) -> list[dict]:
-    """TODO: one row per id — the raw material of the number. A missing or
-    empty item is a refusal, not a skipped row."""
-    raise NotImplementedError("rows(): one dict per id, fail loud on a missing one")
+    """One row per case: the visible files under <inputs>/<case_id>/. A missing
+    or empty case directory is a refusal."""
+    by_id = {c["case_id"]: c for c in _cases()}
+    out = []
+    for i in ids:
+        d = REPO / by_id[i]["inputs"] / i
+        if not d.is_dir():
+            raise FileNotFoundError(f"case {i}: no directory {d}")
+        docs = visible(d)
+        if not docs:
+            raise ValueError(f"case {i}: no documents in {d}")
+        out.append({"id": i, COUNT_FIELD: len(docs)})
+    return out
 
 
 def evaluate_rows(items: list[dict], ids: list[str]) -> dict:
@@ -65,7 +78,7 @@ def evaluate_rows(items: list[dict], ids: list[str]) -> dict:
         raise ValueError("evaluate_rows(): SOURCE lists no ids — refusing a number over nothing")
     if len(items) != len(ids):
         raise ValueError(f"evaluate_rows(): {len(items)} rows for {len(ids)} ids — a silent loss")
-    raise NotImplementedError("evaluate_rows(): compute the number(s) from items")
+    return {METRIC_KEY: sum(r[COUNT_FIELD] for r in items) / len(ids)}
 
 
 def main() -> None:
