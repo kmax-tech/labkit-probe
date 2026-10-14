@@ -2,7 +2,7 @@
 
 ## Summary (after the run, for a person)
 
-- **Result:** pending run
+- **Result:** mean_docs_per_case = 3.5 (run 2026-10-14T14-09-22_2134)
 
 ## Intent (before the run)
 
@@ -11,7 +11,7 @@
 
 ## Result (after the run — write back, don't go quiet)
 
-- **Answer to the question:** pending run
+- **Answer to the question:** mean_docs_per_case = 3.5 (run 2026-10-14T14-09-22_2134)
 
 ## Setup
 
@@ -21,7 +21,7 @@
 
 ## Runs (documented runs — via `runlog`, cite run_ids instead of retyping numbers)
 
-- <run_id> — <one sentence: what this run was>
+- 2026-10-14T14-09-22_2134 — the kept run; its metrics.json is the number
 
 ## Head (read by the checks)
 
